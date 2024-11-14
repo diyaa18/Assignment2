@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f5;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"], input[type="email"], input[type="tel"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .error-message {
+            color: #ff0000;
+            font-size: 14px;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            display: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $("#myForm").submit(function(event) {
+                event.preventDefault(); // Prevent form submission for validation
+                $(".error-message").hide(); // Hide all previous error messages
+
+                let isValid = true;
+
+                // Validate name
+                const name = $("#name").val().trim();
+                if (name === "") {
+                    $("#nameError").show().text("Name is required.");
+                    isValid = false;
+                }
+
+                // Validate email
+                const email = $("#email").val().trim();
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if (email === "") {
+                    $("#emailError").show().text("Email is required.");
+                    isValid = false;
+                } else if (!emailPattern.test(email)) {
+                    $("#emailError").show().text("Enter a valid email address.");
+                    isValid = false;
+                }
+
+                // Validate phone
+                const phone = $("#phone").val().trim();
+                const phonePattern = /^[0-9]{10}$/; // Assumes 10-digit phone numbers
+                if (phone === "") {
+                    $("#phoneError").show().text("Phone number is required.");
+                    isValid = false;
+                } else if (!phonePattern.test(phone)) {
+                    $("#phoneError").show().text("Enter a valid 10-digit phone number.");
+                    isValid = false;
+                }
+
+                // Validate address
+                const address = $("#address").val().trim();
+                if (address === "") {
+                    $("#addressError").show().text("Address is required.");
+                    isValid = false;
+                }
+
+                // If all fields are valid, submit form
+                if (isValid) {
+                    alert("Form submitted successfully!");
+                    // You can add form submission logic here if needed
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Form Validation</h2>
+    <form id="myForm">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name">
+            <span class="error-message" id="nameError">Name is required.</span>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <span class="error-message" id="emailError">Email is required.</span>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone">
+            <span class="error-message" id="phoneError">Phone number is required.</span>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address">
+            <span class="error-message" id="addressError">Address is required.</span>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit</button>
+    </form>
+</div>
+
+</body>
+</html>

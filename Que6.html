@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Information</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        input {
+            padding: 12px;
+            width: 70%;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+
+        button {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 8px;
+            background-color: #1c0544;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #movieResult {
+            margin-top: 20px;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        #movieResult h2 {
+            color: #007BFF;
+        }
+
+        #movieResult img {
+            width: 100%;
+            max-width: 200px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Movie Information</h1>
+        <input type="text" id="movieInput" placeholder="Enter movie title">
+        <button id="getMovie">Get Movie Info</button>
+        <div id="movieResult"></div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#getMovie').on('click', function () {
+                const movieTitle = $('#movieInput').val();
+                const apiKey = 'your_omdb_api_key'; // Replace with your OMDb API key
+                const url = https://www.omdbapi.com/?t=${movieTitle}&apikey=${apiKey};
+
+                // Checking if user input is not empty
+                if (!movieTitle) {
+                    $('#movieResult').html('<p style="color: red;">Please enter a movie title.</p>');
+                    return;
+                }
+
+                $.ajax({
+                    url: url,
+                    method: 'GET',
+                    success: function (data) {
+                        if (data.Response === "True") {
+                            const resultHtml = `
+                                <h2>${data.Title} (${data.Year})</h2>
+                                <img src="${data.Poster !== 'N/A' ? data.Poster : 'default-poster.png'}" alt="${data.Title}">
+                                <p><strong>Plot:</strong> ${data.Plot}</p>
+                                <p><strong>Genre:</strong> ${data.Genre}</p>
+                                <p><strong>Director:</strong> ${data.Director}</p>
+                                <p><strong>Actors:</strong> ${data.Actors}</p>
+                                <p><strong>IMDB Rating:</strong> ${data.imdbRating}</p>
+                            `;
+                            $('#movieResult').html(resultHtml);
+                        } else {
+                            $('#movieResult').html('<p style="color: red;">Movie not found. Please try again.</p>');
+                        }
+                    },
+                    error: function () {
+                        $('#movieResult').html('<p style="color: red;">Error fetching movie data. Please try again later.</p>');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

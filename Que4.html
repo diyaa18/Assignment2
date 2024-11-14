@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* styles.css */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .slider-container {
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .slider {
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .slider img {
+            max-width: 100%;
+            height: auto;
+            display: none;
+        }
+
+        .navigation {
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slider-container">
+        <div class="slider">
+            <img src="IMAGE/21.jpg" alt="Image 1">
+            <img src="IMAGE/22.jpg" alt="Image 2">
+            <img src="IMAGE/23.jpg" alt="Image 3">
+            <!-- Add more images as needed -->
+        </div>
+        <div class="navigation">
+            <button id="prevBtn">Previous</button>
+            <button id="nextBtn">Next</button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var currentIndex = 0;
+            var slides = $('.slider img');
+            var totalSlides = slides.length;
+
+            // Show the initial image
+            showSlide(currentIndex);
+
+            // Handle "Next" button click
+            $('#nextBtn').click(function () {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                showSlide(currentIndex);
+            });
+
+            // Handle "Previous" button click
+            $('#prevBtn').click(function () {
+                currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                showSlide(currentIndex);
+            });
+
+            // Function to show the current slide
+            function showSlide(index) {
+                slides.hide();
+                slides.eq(index).show();
+            }
+        });
+
+    </script>
+</body>
+
+</html>

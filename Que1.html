@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("form").submit(function (event) {
+                event.preventDefault(); // Prevent the form from submitting
+
+                // Validate name and email fields
+                var name = $("#name").val();
+                var email = $("#email").val();
+                var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+                if (name === "") {
+                    alert("Please enter your name.");
+                    return false; // Prevent form submission
+                }
+
+                if (!email.match(emailPattern)) {
+                    alert("Please enter a valid email address.");
+                    return false; // Prevent form submission
+                }
+
+                // Form data is valid, display an alert
+                alert("Form submitted!\nName: " + name + "\nEmail: " + email);
+            });
+        });
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+        }
+
+        label {
+            margin-bottom: 10px;
+        }
+
+        input {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 250px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color:rgb(72, 238, 74);
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <form>
+        <h1>Simple Form</h1>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter Name"><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter Email" ><br><br>
+
+        <button type="submit" id="submit">Submit</button>
+    </form>
+</body>
+
+</html>
